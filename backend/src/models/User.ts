@@ -1,5 +1,3 @@
-import pool from '../config/db';
-
 export interface User {
     id: number;
     username: string;
