@@ -12,3 +12,6 @@
 ```bash
 git clone ...
 cd todo-app
+
+
+Route → Controller → (Service) → Model → DB
