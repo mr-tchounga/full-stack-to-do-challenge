@@ -1,7 +1,18 @@
 import session from 'express-session';
+import connectPSession from "connect-pg-simple";
+import dotenv from "dotenv";
+import pool from "./db";
+
+dotenv.config();
+
+const PgSession = connectPSession(session);
 
 export default session({
-    secret: process.env.SESSION_SECRET || '',
+    store: new PgSession({
+        pool: pool,
+        tableName: 'session'
+    }),
+    secret: process.env.SESSION_SECRET || 'secret-key',
     resave: false,
     saveUninitialized: false,
     cookie: {

@@ -8,7 +8,7 @@ export const create = async (req: Request, res: Response) => {
 }
 
 export const get = async (req: Request, res: Response) => {
-    const { categoryId } = req.body;
+    const categoryId = parseInt(req.params.categoryId, 10);
     const userId = req.session.userId;
     const task = await getTask(userId, categoryId);
     return res.status(200).json(task)
