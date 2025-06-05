@@ -6,7 +6,7 @@ import session from "./config/session";
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
 import taskRoutes from './routes/taskRoutes';
-// import categoryRoutes from './routes/categoryRoutes';
+import categoryRoutes from './routes/categoryRoutes';
 
 dotenv.config();
 
@@ -21,7 +21,7 @@ app.use(session);
 app.use('api/auth', authRoutes);
 app.use('api/user', userRoutes);
 app.use('api/task', taskRoutes);
-// app.use('api/category', categoryRoutes);
+app.use('api/category', categoryRoutes);
 
 app.get('/', (_req, res) => {
     res.send('Server is Running...');

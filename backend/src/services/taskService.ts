@@ -1,6 +1,6 @@
 import pool from "../config/db";
 
-export const createTask = async (title: string, description: string, userId: string, categoryId?: string) => {
+export const createTask = async (title: string, description: string, userId: number, categoryId?: string) => {
     let result;
     if (categoryId == null) { 
         result = await pool.query(
@@ -26,7 +26,7 @@ export const getTask = async (userId: number, categoryId?: number) => {
     return result.rows[0];
 }
 
-export const updateTask = async (userId: string, taskId: number, title: string, description: string, categoryId: string) => {
+export const updateTask = async (userId: number, taskId: number, title: string, description: string, categoryId: number) => {
     const result = await pool.query(
         'UPDATE tasks SET title=$3, description=$4, category_id=$5, updated_by=$1 WHERE created_by=$1 and id=$2', 
         [userId, taskId, title, description, categoryId]);
