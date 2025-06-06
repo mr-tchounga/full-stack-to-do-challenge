@@ -10,7 +10,7 @@ export const create = async (req: Request, res: Response) => {
 
 export const get = async (req: Request, res: Response) => {
     const userId = req.session.userId;
-    const categoryId = parseInt(req.params.id, 10);
+    const categoryId = parseInt(req.params.id, 10); 
     let category;
     if (categoryId) {
         category = await getCategoryById(userId!, categoryId);

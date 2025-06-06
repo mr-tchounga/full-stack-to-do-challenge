@@ -23,6 +23,15 @@ export const getTask = async (userId: number, categoryId?: number) => {
     } else {
         result = await pool.query('SELECT * FROM tasks WHERE created_by=$1 and category_id=$2', [userId, categoryId]);
     }
+    return result;
+}
+export const getTaskById = async (userId: number, taskId: number, categoryId?: number) => {
+    let result;
+    if (categoryId == null) {
+        result = await pool.query('SELECT * FROM tasks WHERE created_by=$1 AND id=$2', [userId, taskId]);
+    } else {
+        result = await pool.query('SELECT * FROM tasks WHERE created_by=$1 and category_id=$2 AND id=$3', [userId, categoryId, taskId]);
+    }
     return result.rows[0];
 }
 

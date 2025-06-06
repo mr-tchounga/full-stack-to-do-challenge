@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createTask, getTask, updateTask, deleteTask } from '../services/taskService';
+import { createTask, getTask, getTaskById, updateTask, deleteTask } from '../services/taskService';
 
 export const create = async (req: Request, res: Response) => {
     const { title, description, categoryId } = req.body;
@@ -9,9 +9,15 @@ export const create = async (req: Request, res: Response) => {
 }
 
 export const get = async (req: Request, res: Response) => {
-    const categoryId = parseInt(req.params.categoryId, 10);
     const userId = req.session.userId;
-    const task = await getTask(userId!, categoryId);
+    const taskId = req.params.id ? parseInt(req.params.id, 10) : undefined;
+    const categoryId = req.params.categoryId ? parseInt(req.params.categoryId, 10) : null;
+    let task 
+    if (taskId){
+        task = await getTaskById(userId!, taskId, categoryId!);
+    } else {
+        task = await getTask(userId!, categoryId!);
+    }
     return res.status(200).json(task)
 }
 
