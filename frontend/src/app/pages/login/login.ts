@@ -1,8 +1,8 @@
-// 📁 src/app/pages/login/login.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth'; 
 
 @Component({
   selector: 'app-login',
@@ -14,21 +14,22 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   email = '';
   password = '';
+  loading = false;
 
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  async login() {
-    const response = await fetch('http://localhost:3000/api/auth/login', {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: this.email, password: this.password }),
+  login() {
+    this.loading = true;
+
+    this.authService.login({ email: this.email, password: this.password }).subscribe({
+      next: () => {
+        this.router.navigate(['/categories']);
+      },
+      error: (err) => {
+        console.error('Login error:', err);
+        alert('Email ou mot de passe incorrect');
+        this.loading = false;
+      }
     });
-
-    if (response.ok) {
-      this.router.navigate(['/tasks']);
-    } else {
-      alert('Email ou mot de passe incorrect');
-    }
   }
 }
