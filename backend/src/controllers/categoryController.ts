@@ -15,8 +15,9 @@ export const get = async (req: Request, res: Response) => {
 }
 
 export const update = async (req: Request, res: Response) => {
-    const { title, categoryId } = req.body;
+    const { title } = req.body;
     const userId = req.session.userId;
+    const categoryId = parseInt(req.params.id, 10);
     const category = await updateCategory(userId!, categoryId, title);
     return res.status(200).json(category)
 }
