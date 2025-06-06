@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createCategory, getCategory, updateCategory, deleteCategory } from '../services/categoryService';
+import { createCategory, getCategory, getCategoryById, updateCategory, deleteCategory } from '../services/categoryService';
 
 export const create = async (req: Request, res: Response) => {
     const { title } = req.body;
@@ -10,7 +10,13 @@ export const create = async (req: Request, res: Response) => {
 
 export const get = async (req: Request, res: Response) => {
     const userId = req.session.userId;
-    const category = await getCategory(userId!);
+    const categoryId = parseInt(req.params.id, 10);
+    let category;
+    if (categoryId) {
+        category = await getCategoryById(userId!, categoryId);
+    } else {
+        category = await getCategory(userId!);
+    }
     return res.status(200).json(category)
 }
 

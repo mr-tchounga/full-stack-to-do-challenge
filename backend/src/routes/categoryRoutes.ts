@@ -6,6 +6,7 @@ const router = Router();
 
 router.post('/', isAuthenticated, create);
 router.get('/', isAuthenticated, get);
+router.get('/:id', isAuthenticated, get);
 router.put('/:id', isAuthenticated, update);
 router.delete('/:id', isAuthenticated, remove);
 
