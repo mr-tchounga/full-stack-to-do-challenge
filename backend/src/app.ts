@@ -18,10 +18,10 @@ app.use(express.json());
 app.use(session);
 
 // Routes
-app.use('api/auth', authRoutes);
-app.use('api/user', userRoutes);
-app.use('api/task', taskRoutes);
-app.use('api/category', categoryRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/task', taskRoutes);
+app.use('/api/category', categoryRoutes);
 
 app.get('/', (_req, res) => {
     res.send('Server is Running...');

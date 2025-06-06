@@ -2,7 +2,7 @@ import pool from "../config/db";
 
 export const createCategory = async (title: string, userId: number) => {
     let result = await pool.query(
-        'INSERT INTO categories (title, created_by) VALUES ($1, $3) RETURNING *',
+        'INSERT INTO categories (title, created_by) VALUES ($1, $2) RETURNING *',
         [title, userId] 
     );    
     return result.rows[0];

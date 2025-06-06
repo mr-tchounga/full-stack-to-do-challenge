@@ -7,7 +7,7 @@ export const login = async (req: Request, res: Response) => {
     const user = await getUserByEmail(email);
 
     if (!user) {
-        return res.status(401).json({ message: 'Invalid Email'});
+        return res.status(401).json({ message: 'No user found with Email'});
     }
     
     const isPasswordValid = await comparePasswords(password, user.password);
