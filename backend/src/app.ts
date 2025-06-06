@@ -13,7 +13,10 @@ dotenv.config();
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+    origin: 'http:localhost:4200',
+    credentials: true
+}));
 app.use(express.json());
 app.use(session);
 
@@ -29,7 +32,7 @@ app.get('/', (_req, res) => {
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
-    console.log('Server is Running on http://locahost:${PORT}');
+    console.log(`Server is Running on http://locahost:${PORT}`);
 })
 
 export default app;

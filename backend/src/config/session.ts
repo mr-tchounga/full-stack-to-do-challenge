@@ -15,9 +15,10 @@ export default session({
     secret: process.env.SESSION_SECRET || 'secret-key',
     resave: false,
     saveUninitialized: false,
-    cookie: {
-        secure: process.env.NODE_ENV === 'production',
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60
-    }
+    cookie: { secure: false }
+    // cookie: {
+    //     secure: process.env.NODE_ENV === 'production',
+    //     httpOnly: true,
+    //     maxAge: 1000 * 60 * 60
+    // }
 });

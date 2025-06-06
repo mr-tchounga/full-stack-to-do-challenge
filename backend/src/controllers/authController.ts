@@ -30,3 +30,11 @@ export const logout = async (req: Request, res: Response) => {
         res.status(200).json({ message: 'Logout Successful!'});
     })
 }
+
+export const check = async (req: Request, res: Response) => {
+    if (req.session.userId) {
+        res.status(200).json({ authenticated: true });
+    } else {
+        res.status(401).json({ authenticated: false });
+    }
+}
