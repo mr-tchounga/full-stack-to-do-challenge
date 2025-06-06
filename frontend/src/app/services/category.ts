@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 
 export interface Category {
   id: number;
-  name: string;
+  title: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
-  private apiUrl = 'http://localhost:3000/api/categories';
+  private apiUrl = 'http://localhost:3000/api/category';
 
   constructor(private http: HttpClient) {}
 
@@ -17,11 +17,11 @@ export class CategoryService {
     return this.http.get<Category[]>(this.apiUrl, { withCredentials: true });
   }
 
-  create(category: { name: string }): Observable<Category> {
+  create(category: { title: string }): Observable<Category> {
     return this.http.post<Category>(this.apiUrl, category, { withCredentials: true });
   }
 
-  update(id: number, category: { name: string }): Observable<Category> {
+  update(id: number, category: { title: string }): Observable<Category> {
     return this.http.put<Category>(`${this.apiUrl}/${id}`, category, { withCredentials: true });
   }
 

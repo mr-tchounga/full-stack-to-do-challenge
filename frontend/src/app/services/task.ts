@@ -12,7 +12,7 @@ export interface Task {
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  private apiUrl = 'http://localhost:3000/api/tasks';
+  private apiUrl = 'http://localhost:3000/api/task';
 
   constructor(private http: HttpClient) {}
 

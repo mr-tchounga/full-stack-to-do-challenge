@@ -1,1 +1,47 @@
-<p>task works!</p>
+<div class="container mt-4" style="max-width: 700px">
+  <h2 class="mb-3 text-center">Gestion des tâches</h2>
+
+  <div class="mb-3">
+    <label for="categoryFilter" class="form-label">Filtrer par catégorie</label>
+    <select id="categoryFilter" class="form-select" [(ngModel)]="selectedCategoryId" (change)="onCategoryChange()">
+      <option [ngValue]="null">Toutes les catégories</option>
+      <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+    </select>
+  </div>
+
+  <form (ngSubmit)="save()" class="mb-4">
+    <div class="mb-3">
+      <label class="form-label">Titre</label>
+      <input type="text" class="form-control" [(ngModel)]="title" name="title" required />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea class="form-control" [(ngModel)]="description" name="description" rows="3" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Catégorie</label>
+      <select class="form-select" [(ngModel)]="selectedCategoryId" name="categoryId" required>
+        <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">{{ editMode ? 'Mettre à jour' : 'Ajouter' }}</button>
+    <button type="button" class="btn btn-secondary ms-2" *ngIf="editMode" (click)="resetForm()">Annuler</button>
+  </form>
+
+  <ul class="list-group">
+    <li *ngFor="let task of tasks" class="list-group-item d-flex justify-content-between align-items-start">
+      <div>
+        <strong>{{ task.title }}</strong><br />
+        <small>{{ task.description }}</small><br />
+        <small><em>Catégorie: {{ getCategoryName(task.categoryId) }}</em></small>
+      </div>
+      <div>
+        <button class="btn btn-sm btn-outline-secondary me-2" (click)="edit(task)">Modifier</button>
+        <button class="btn btn-sm btn-outline-danger" (click)="delete(task.id)">Supprimer</button>
+      </div>
+    </li>
+  </ul>
+</div>

@@ -12,7 +12,7 @@ import { CategoryService, Category } from '../../services/category';
 })
 export class CategoryComponent implements OnInit {
   categories: Category[] = [];
-  name = '';
+  title = ''; // ← CORRECTION : on utilise 'title' au lieu de 'name'
   editMode = false;
   selectedId: number | null = null;
 
@@ -28,12 +28,12 @@ export class CategoryComponent implements OnInit {
 
   save() {
     if (this.editMode && this.selectedId !== null) {
-      this.categoryService.update(this.selectedId, { name: this.name }).subscribe(() => {
+      this.categoryService.update(this.selectedId, { title: this.title }).subscribe(() => {
         this.resetForm();
         this.loadCategories();
       });
     } else {
-      this.categoryService.create({ name: this.name }).subscribe(() => {
+      this.categoryService.create({ title: this.title }).subscribe(() => {
         this.resetForm();
         this.loadCategories();
       });
@@ -43,7 +43,7 @@ export class CategoryComponent implements OnInit {
   edit(category: Category) {
     this.editMode = true;
     this.selectedId = category.id;
-    this.name = category.name;
+    this.title = category.title; // ← CORRECTION
   }
 
   delete(id: number) {
@@ -53,7 +53,7 @@ export class CategoryComponent implements OnInit {
   }
 
   resetForm() {
-    this.name = '';
+    this.title = '';
     this.editMode = false;
     this.selectedId = null;
   }
