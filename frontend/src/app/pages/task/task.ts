@@ -3,14 +3,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TaskService, Task } from '../../services/task-serv';
 import { CategoryService, Category } from '../../services/category-serv';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, RouterModule } from "@angular/router";
 import { Observable, of } from "rxjs";
 import { map, catchError } from 'rxjs/operators';
+import { BreadcrumbComponent } from '../../shared/breadcrumb/breadcrumb';
 
 @Component({
   selector: 'app-task',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule, BreadcrumbComponent],
   templateUrl: './task.html',
   styleUrls: ['./task.scss']
 })

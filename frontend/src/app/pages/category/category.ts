@@ -2,18 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CategoryService, Category } from '../../services/category-serv';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { BreadcrumbComponent } from '../../shared/breadcrumb/breadcrumb';
 
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule, BreadcrumbComponent], 
   templateUrl: './category.html',
   styleUrls: ['./category.scss']
 })
 export class CategoryComponent implements OnInit {
   categories: Category[] = [];
-  title = ''; // ← CORRECTION : on utilise 'title' au lieu de 'name'
+  title = ''; 
   editMode = false;
   selectedId: number | null = null;
 
@@ -50,7 +51,7 @@ export class CategoryComponent implements OnInit {
   edit(category: Category) {
     this.editMode = true;
     this.selectedId = category.id;
-    this.title = category.title; // ← CORRECTION
+    this.title = category.title; 
   }
 
   delete(id: number) {
