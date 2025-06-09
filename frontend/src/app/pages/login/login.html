@@ -1,4 +1,4 @@
-<!-- 📁 src/app/pages/login/login.html -->
+
 <div class="container mt-5" style="max-width: 400px">
   <h2 class="mb-4 text-center">Login</h2>
   <form (ngSubmit)="login()">
@@ -12,4 +12,9 @@
     </div>
     <button type="submit" class="btn btn-primary w-100">Se connecter</button>
   </form>
+
+  <div class="text-center mt-3">
+    <a [routerLink]="['/register']">Pas encore de compte ? S'inscrire</a>
+  </div>
+
 </div>

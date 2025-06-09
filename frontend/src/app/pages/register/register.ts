@@ -2,33 +2,39 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth-serv'; 
+import { AuthService } from '../../services/auth-serv';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
-  templateUrl: './login.html',
-  styleUrls: ['./login.scss']
+  templateUrl: './register.html',
+  styleUrls: ['./register.scss']
 })
-export class LoginComponent {
+export class RegisterComponent {
+  username = '';
   email = '';
   password = '';
   loading = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  login() {
+  register() {
     this.loading = true;
 
-    this.authService.login({ email: this.email, password: this.password }).subscribe({
+    this.authService.register({
+      username: this.username,
+      email: this.email,
+      password: this.password
+    }).subscribe({
       next: () => {
-        this.router.navigate(['/categories']);
+        alert('Inscription réussie ! Vous pouvez vous connecter.');
+        this.router.navigate(['/login']);
       },
       error: (err) => {
-        console.error('Login error:', err);
-        alert('Email ou mot de passe incorrect');
+        console.error('Register error:', err);
+        alert('Erreur lors de l’inscription');
         this.loading = false;
       }
     });
