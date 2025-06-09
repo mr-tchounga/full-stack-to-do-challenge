@@ -4,10 +4,10 @@ import { isAuthenticated } from "../middlewares/authMiddleware";
 
 const router = Router();
 
-router.post('/', isAuthenticated, create);
-router.get('/', isAuthenticated, get);
-router.get('/:id', isAuthenticated, get);
-router.put('/:id', isAuthenticated, update);
-router.delete('/:id', isAuthenticated, remove);
+router.post('/:category_id/task/', isAuthenticated, create);
+router.get('/:category_id/task/', isAuthenticated, get);
+router.get('/:category_id/task/:id', isAuthenticated, get);
+router.put('/:category_id/task/:id', isAuthenticated, update);
+router.delete('/:category_id/task/:id', isAuthenticated, remove);
 
 export default router;

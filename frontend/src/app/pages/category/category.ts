@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CategoryService, Category } from '../../services/category';
+import { CategoryService, Category } from '../../services/category-serv';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-category',
@@ -16,7 +17,9 @@ export class CategoryComponent implements OnInit {
   editMode = false;
   selectedId: number | null = null;
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(
+    private categoryService: CategoryService,
+    private router: Router) {}
 
   ngOnInit() {
     this.loadCategories();
@@ -24,6 +27,10 @@ export class CategoryComponent implements OnInit {
 
   loadCategories() {
     this.categoryService.getAll().subscribe(data => this.categories = data);
+  }
+  selectCategory(category: Category) {
+    this.selectedId = category.id;
+    this.router.navigate([`/categories/${category.id}/tasks`]);
   }
 
   save() {

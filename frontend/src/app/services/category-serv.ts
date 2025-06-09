@@ -14,8 +14,12 @@ export class CategoryService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.apiUrl, { withCredentials: true });
+    return this.http.get<Category[]>(`${this.apiUrl}`, { withCredentials: true });
   }
+  getById(id: number): Observable<Category> {
+    return this.http.get<Category>(`${this.apiUrl}/${id}`, { withCredentials: true });
+  }
+
 
   create(category: { title: string }): Observable<Category> {
     return this.http.post<Category>(this.apiUrl, category, { withCredentials: true });

@@ -23,7 +23,7 @@ app.use(session);
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
-app.use('/api/task', taskRoutes);
+app.use('/api/category', taskRoutes);
 app.use('/api/category', categoryRoutes);
 
 app.get('/', (_req, res) => {

@@ -9,11 +9,11 @@ export const createCategory = async (title: string, userId: number) => {
 }
 
 export const getCategory = async (userId: number) => {
-    let result = await pool.query('SELECT * FROM categories WHERE created_by=$1', [userId]);
-    return result;
+    let result = await pool.query('SELECT * FROM categories WHERE created_by=$1 ORDER BY title ASC;', [userId]);
+    return result.rows;
 }
 export const getCategoryById = async (userId: number, categoryId: number) => {
-    let result = await pool.query('SELECT * FROM categories WHERE created_by=$1 AND id=$2', [userId, categoryId]);
+    let result = await pool.query('SELECT * FROM categories WHERE created_by=$1 AND id=$2 ORDER BY title ASC;', [userId, categoryId]);
     return result.rows[0];
 }
 

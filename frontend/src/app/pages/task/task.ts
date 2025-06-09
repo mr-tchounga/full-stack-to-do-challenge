@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TaskService, Task } from '../../services/task';
-import { CategoryService, Category } from '../../services/category';
+import { TaskService, Task } from '../../services/task-serv';
+import { CategoryService, Category } from '../../services/category-serv';
+import { ActivatedRoute } from "@angular/router";
+import { Observable, of } from "rxjs";
+import { map, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task',
@@ -22,22 +25,37 @@ export class TaskComponent implements OnInit {
   editMode = false;
   selectedTaskId: number | null = null;
 
-  constructor(private taskService: TaskService, private categoryService: CategoryService) {}
+  constructor(
+    private taskService: TaskService, 
+    private categoryService: CategoryService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.extractCategoryIdFromUrl();
+  }
+
+  extractCategoryIdFromUrl() {
+    this.route.params.subscribe(params => {
+      const categoryId = +params['categoryId'];
+      if (categoryId) {
+        this.selectedCategoryId = categoryId;
+      }
     this.loadCategories();
     this.loadTasks();
+    });
   }
 
   loadCategories() {
     this.categoryService.getAll().subscribe(categories => this.categories = categories);
   }
-
+  
   loadTasks() {
     if (this.selectedCategoryId) {
-      this.taskService.getAll(this.selectedCategoryId).subscribe(tasks => this.tasks = tasks);
+      this.taskService.getAll(this.selectedCategoryId!).subscribe(tasks => this.tasks = tasks);
+      console.log(`tasks: ${this.tasks}`)
     } else {
-      this.taskService.getAll().subscribe(tasks => this.tasks = tasks);
+      // this.taskService.getAll().subscribe(tasks => this.tasks = tasks);
     }
   }
 
@@ -76,9 +94,9 @@ export class TaskComponent implements OnInit {
     this.selectedCategoryId = task.categoryId;
   }
 
-  delete(id: number) {
+  delete(id: number, categoryId: number) {
     if (confirm('Voulez-vous vraiment supprimer cette tâche ?')) {
-      this.taskService.delete(id).subscribe(() => this.loadTasks());
+      this.taskService.delete(id, categoryId).subscribe(() => this.loadTasks());
     }
   }
 
@@ -94,9 +112,13 @@ export class TaskComponent implements OnInit {
     this.loadTasks();
   }
 
-  getCategoryTitle(categoryId: number): string {
-    const cat = this.categories.find(c => c.id === categoryId);
-    return cat ? cat.title : 'N/A';
+  // getCategoryTitle(categoryId: number): string {
+  getCategoryTitle$(categoryId: number): Observable<string> {
+    return this.categoryService.getById(categoryId).pipe(
+      map(category => category.title || 'N/A'),
+      catchError(() => of('N/A')) 
+    );
   }
+
 
 }

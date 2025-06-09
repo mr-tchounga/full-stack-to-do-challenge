@@ -1,6 +1,6 @@
 import pool from "../config/db";
 
-export const createTask = async (title: string, description: string, userId: number, categoryId?: string) => {
+export const createTask = async (title: string, description: string, userId: number, categoryId?: number) => {
     let result;
     if (categoryId == null) { 
         result = await pool.query(
@@ -19,18 +19,18 @@ export const createTask = async (title: string, description: string, userId: num
 export const getTask = async (userId: number, categoryId?: number) => {
     let result;
     if (categoryId== null) {
-        result = await pool.query('SELECT * FROM tasks WHERE created_by=$1', [userId]);
+        result = await pool.query('SELECT * FROM tasks WHERE created_by=$1 ORDER BY title ASC;', [userId]);
     } else {
-        result = await pool.query('SELECT * FROM tasks WHERE created_by=$1 and category_id=$2', [userId, categoryId]);
+        result = await pool.query('SELECT * FROM tasks WHERE created_by=$1 and category_id=$2 ORDER BY title ASC;', [userId, categoryId]);
     }
-    return result;
+    return result.rows;
 }
 export const getTaskById = async (userId: number, taskId: number, categoryId?: number) => {
     let result;
     if (categoryId == null) {
-        result = await pool.query('SELECT * FROM tasks WHERE created_by=$1 AND id=$2', [userId, taskId]);
+        result = await pool.query('SELECT * FROM tasks WHERE created_by=$1 AND id=$2 ORDER BY title ASC;', [userId, taskId]);
     } else {
-        result = await pool.query('SELECT * FROM tasks WHERE created_by=$1 and category_id=$2 AND id=$3', [userId, categoryId, taskId]);
+        result = await pool.query('SELECT * FROM tasks WHERE created_by=$1 and category_id=$2 AND id=$3 ORDER BY title ASC;', [userId, categoryId, taskId]);
     }
     return result.rows[0];
 }

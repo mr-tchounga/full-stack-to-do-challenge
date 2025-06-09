@@ -5,8 +5,11 @@ import { TaskComponent } from './pages/task/task';
 import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'tasks', pathMatch: 'full' },
+    { path: '', redirectTo: 'categories', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'categories', component: CategoryComponent, canActivate: [authGuard] },
-    { path: 'tasks', component: TaskComponent, canActivate: [authGuard] }
+    
+    // Routes for tasks associated with a specific category
+    { path: 'categories/:categoryId/tasks', component: TaskComponent, canActivate: [authGuard] }, // List tasks for a category
+    { path: 'categories/:categoryId/tasks/:taskId', component: TaskComponent, canActivate: [authGuard] }, // View/edit specific task
 ];
